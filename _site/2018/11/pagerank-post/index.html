@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+	<script type="text/x-mathjax-config"> 
+   		MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); 
+   	</script>
+    <script type="text/x-mathjax-config">
+    	MathJax.Hub.Config({tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+    </script>
+    
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+    </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>关于为什么pagerank能收敛</title>
+  <meta name="description" content="pagerank的主要思想">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="关于为什么pagerank能收敛">
+  <meta name="twitter:description" content="pagerank的主要思想">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="关于为什么pagerank能收敛">
+  <meta property="og:description" content="pagerank的主要思想">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2018/11/pagerank-post/">
+  <link rel="alternate" type="application/rss+xml" title="小菜菜程序媛" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 小菜菜程序媛 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="小菜菜程序媛 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 小菜菜程序媛" class="blog-button">小菜菜程序媛</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">A blog-orientation theme for Frieda</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Love coding, coding love me!.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://github.com/crazygirlfym" target="_blank">github address</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+                  <li class="navigation__item"><a href="https://github.com/crazygirlfym" target="_blank" title="My Projects">Projects</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/crazygirlfym" title="@crazygirlfym 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/crazygirlfym" title="@crazygirlfym 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/crazygirlfym" title="@crazygirlfym" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Google Plus -->
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107108267983477358170" rel="author" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google Plus</span>
+    </a>
+  </li>
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:crazygirlfym@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-red"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-11-06 15:32:24 +0900" itemprop="datePublished" class="post-meta__date date">2018-11-06</time> &#8226; <span class="post-meta__tags tags">machine learning</span>
+    </div>
+    <h1 class="post-title">关于为什么pagerank能收敛</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="pagerank的主要思想">pagerank的主要思想</h2>
+
+<ul>
+  <li>如果一个网页被很多其他网页链接到的话说明这个网页比较重要，也就是PageRank值会相对较高</li>
+  <li>如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页的PageRank值会相应地因此而提高</li>
+</ul>
+
+<hr />
+
+<h2 id="算法原理">算法原理</h2>
+
+<p><img src="https://img-blog.csdn.net/20180506223511896?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3VzdGJmeW0=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+
+<p>PageRank算法是互联网中的众多网页看做是一个有向图，如上图所示。算法过程是把网页预先给网页一个PR值（一般取$\frac{1}{N}$, N 为网页总数）。然后通过以下公式不断更新PR值，直到收敛：</p>
+
+<script type="math/tex; mode=display">PR(p_i) = \alpha \sum _{p_j \in M_{p_i}} \frac{PR(p_j)}{L(p_j)}  + \frac{1-\alpha}{N}</script>
+
+<p>其中$M_{p_i}$ 是所有对$p_i$网页有出链的网页集合， $L(p_j)$是$p_j$的出链数目， $alpha=0.85$， 从以上公式来看，若$M_{p_i}$的PR值越大，$p_i$越大， 同时$M_{p_i}$ 中的网页， 出链数目越少，影响力越大。</p>
+
+<p>为了解决有些网页不被链接的情况，引入了『teleporting』, 所谓『teleporting』就是我们认为在任何一个页面浏览的用户都有可能以一个极小的概率瞬间转移道另外一个随机页面。当然，这个页面之前可能不存在超链接，因此不可能直接转移过去，只是为了算法需要。即$\frac{1-\alpha}{ N}$</p>
+
+<hr />
+
+<p>##为什么能收敛？</p>
+
+<p>然后需要回到我们的标题，为什么能收敛的问题。需要转换为Markov过程。</p>
+
+<p><strong>如何转换为Markov过程</strong></p>
+
+<p>取$e$为所有分量都为1的列向量，接着定义矩阵：
+$A = \alpha S + \frac{1- \alpha }{N} e e^T$, 则PR的计算过程可以转化为</p>
+
+<p>$P_{n+1} = A P_n$ , 于是该过程就转为了一个Markov过程了。</p>
+
+<p>下面要证明pagerank收敛，即证明其满足Markov过程收敛的条件：</p>
+
+<ul>
+  <li>A为随机矩阵(<strong>A矩阵所有元素都大于等于0，并且每一列的元素和都为1</strong>)</li>
+  <li>A为不可约的(<strong>当图是强连通时，A为不可约，我们之前定义各个网页都是可相互转跳的</strong>)</li>
+  <li>A为非周期的</li>
+</ul>
+
+<p>以上条件均满足，所以pagerank是收敛的，且与初始值无关。</p>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/02/hello-world-vno/" title="link to Hello World - Vno">Hello World - Vno</a></h2>
+       <p class="excerpt">What’s thisVno Jekyll is a theme for Jekyll. It is a port of my Ghost theme vno, which is originally developed from Dale Anthony’s Uno.Usage$ git clone https://github.com/onevcat/vno-jekyll.git your_site$ cd your_site$ bundler install$ bundler exe...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-02-16 15:32:24 +0900" class="post-list__meta--date date">2016-02-16</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/02/hello-world-vno/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2018/11/pagerank-post/";
+        this.page.identifier = "/2018/11/pagerank-post/";
+    };
+
+    var disqus_shortname = 'crazygirlfym';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2018-11-06 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://onev.cat">@onevcat</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2018</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

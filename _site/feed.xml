@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>小菜菜程序媛</title>
+    <description>Love coding, coding love me!.</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 06 Nov 2018 18:37:39 +0800</pubDate>
+    <lastBuildDate>Tue, 06 Nov 2018 18:37:39 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.0</generator>
+    
+      <item>
+        <title>关于为什么pagerank能收敛</title>
+        <description>&lt;h2 id=&quot;pagerank的主要思想&quot;&gt;pagerank的主要思想&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如果一个网页被很多其他网页链接到的话说明这个网页比较重要，也就是PageRank值会相对较高&lt;/li&gt;
+  &lt;li&gt;如果一个PageRank值很高的网页链接到一个其他的网页，那么被链接到的网页的PageRank值会相应地因此而提高&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;算法原理&quot;&gt;算法原理&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img-blog.csdn.net/20180506223511896?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3VzdGJmeW0=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70&quot; alt=&quot;这里写图片描述&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;PageRank算法是互联网中的众多网页看做是一个有向图，如上图所示。算法过程是把网页预先给网页一个PR值（一般取$\frac{1}{N}$, N 为网页总数）。然后通过以下公式不断更新PR值，直到收敛：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;PR(p_i) = \alpha \sum _{p_j \in M_{p_i}} \frac{PR(p_j)}{L(p_j)}  + \frac{1-\alpha}{N}&lt;/script&gt;
+
+&lt;p&gt;其中$M_{p_i}$ 是所有对$p_i$网页有出链的网页集合， $L(p_j)$是$p_j$的出链数目， $alpha=0.85$， 从以上公式来看，若$M_{p_i}$的PR值越大，$p_i$越大， 同时$M_{p_i}$ 中的网页， 出链数目越少，影响力越大。&lt;/p&gt;
+
+&lt;p&gt;为了解决有些网页不被链接的情况，引入了『teleporting』, 所谓『teleporting』就是我们认为在任何一个页面浏览的用户都有可能以一个极小的概率瞬间转移道另外一个随机页面。当然，这个页面之前可能不存在超链接，因此不可能直接转移过去，只是为了算法需要。即$\frac{1-\alpha}{ N}$&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;##为什么能收敛？&lt;/p&gt;
+
+&lt;p&gt;然后需要回到我们的标题，为什么能收敛的问题。需要转换为Markov过程。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;如何转换为Markov过程&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;取$e$为所有分量都为1的列向量，接着定义矩阵：
+$A = \alpha S + \frac{1- \alpha }{N} e e^T$, 则PR的计算过程可以转化为&lt;/p&gt;
+
+&lt;p&gt;$P_{n+1} = A P_n$ , 于是该过程就转为了一个Markov过程了。&lt;/p&gt;
+
+&lt;p&gt;下面要证明pagerank收敛，即证明其满足Markov过程收敛的条件：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A为随机矩阵(&lt;strong&gt;A矩阵所有元素都大于等于0，并且每一列的元素和都为1&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;A为不可约的(&lt;strong&gt;当图是强连通时，A为不可约，我们之前定义各个网页都是可相互转跳的&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;A为非周期的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上条件均满足，所以pagerank是收敛的，且与初始值无关。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 06 Nov 2018 14:32:24 +0800</pubDate>
+        <link>http://localhost:4000/2018/11/pagerank-post/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/11/pagerank-post/</guid>
+        
+        <category>machine</category>
+        
+        <category>learning</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Hello World - Vno</title>
+        <description>&lt;h4 id=&quot;whats-this&quot;&gt;What’s this&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/onevcat/vno-jekyll&quot;&gt;Vno Jekyll&lt;/a&gt; is a theme for &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;. It is a port of my Ghost theme &lt;a href=&quot;https://github.com/onevcat/vno&quot;&gt;vno&lt;/a&gt;, which is originally developed from &lt;a href=&quot;https://github.com/daleanthony/uno&quot;&gt;Dale Anthony’s Uno&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;usage&quot;&gt;Usage&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;git clone https://github.com/onevcat/vno-jekyll.git your_site
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;your_site
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler install
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;bundler &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Your site with &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; enabled should be accessible in http://127.0.0.1:4000.&lt;/p&gt;
+
+&lt;p&gt;For more information about Jekyll, please visit &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll’s site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;configuration&quot;&gt;Configuration&lt;/h4&gt;
+
+&lt;p&gt;All configuration could be done in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;. Remember you need to restart to serve the page when after changing the config file. Everything in the config file should be self-explanatory.&lt;/p&gt;
+
+&lt;h4 id=&quot;background-image-and-avatar&quot;&gt;Background image and avatar&lt;/h4&gt;
+
+&lt;p&gt;You could replace the background and avatar image in &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/images&lt;/code&gt; folder to change them.&lt;/p&gt;
+
+&lt;h4 id=&quot;sites-using-vno&quot;&gt;Sites using Vno&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;My blog&lt;/a&gt; is using &lt;code class=&quot;highlighter-rouge&quot;&gt;Vno Jekyll&lt;/code&gt; as well, you could see how it works in real. There are some other sites using the same theme. You can find them below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Site Name&lt;/th&gt;
+      &lt;th&gt;URL&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;OneV’s Den&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;http://onevcat.com&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;July Tang&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;http://onevcat.com&quot;&gt;http://blog.julytang.xyz&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Harry Lee&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;http://qiuqi.li&quot;&gt;http://qiuqi.li&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If you happen to be using this theme, welcome to &lt;a href=&quot;https://github.com/onevcat/vno-jekyll/pulls&quot;&gt;send me a pull request&lt;/a&gt; to add your site link here. :)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;license&quot;&gt;License&lt;/h4&gt;
+
+&lt;p&gt;Great thanks to &lt;a href=&quot;https://github.com/daleanthony&quot;&gt;Dale Anthony&lt;/a&gt; and his &lt;a href=&quot;https://github.com/daleanthony/uno&quot;&gt;Uno&lt;/a&gt;. Vno Jekyll is based on Uno, and contains a lot of modification on page layout, animation, font and some more things I can not remember. Vno Jekyll is followed with Uno and be licensed as &lt;a href=&quot;http://creativecommons.org/licenses/by/4.0/&quot;&gt;Creative Commons Attribution 4.0 International&lt;/a&gt;. See the link for more information.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Feb 2016 14:32:24 +0800</pubDate>
+        <link>http://localhost:4000/2016/02/hello-world-vno/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/02/hello-world-vno/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Sample Post</title>
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 15 Feb 2016 14:32:24 +0800</pubDate>
+        <link>http://localhost:4000/2016/02/sample-post/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/02/sample-post/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
