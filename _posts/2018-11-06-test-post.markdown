@@ -6,5 +6,5 @@ tags: machine learning
 ---
 
 
-![图片显示](_my_pics/arthur.png)
+![图片显示](/_my_pics/arthur.png)
 
