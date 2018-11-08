@@ -95,5 +95,23 @@ tags: numpy, tensorflow
 ```
 
 * tf.multiple() 对应np.multiple()
-* tf.matmul() 对应np.dot()
+* tf.matmul(A, B) 对应np.dot() 如果出现三维张量的情况，选择A最外围的两维度和B最内的两个维度，其他维必须是相同的，可以实现batch的乘法操作。
+
+```
+
+	import tensorflow as tf
+
+	a = tf.constant([[[1, 2], [2,3]], [[1,1], [1,2]]])
+	b =  tf.constant(([[[1, 2], [2,3]]]))
+	sess = tf.Session()
+	with sess.as_default():
+		print(sess.run(tf.matmul(a, a)))  
+		# out
+		## [[[ 5  8]
+		 ##  [ 8 13]]
+		 ##[[ 2  3]
+		 ##[ 3  5]]]
+
+    
+```
 * tf.tensordot() 对应np.tensordot()
